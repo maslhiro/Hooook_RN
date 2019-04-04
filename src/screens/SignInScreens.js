@@ -9,8 +9,7 @@ export function SignInScreens() {
 
   return ( 
   <View style={{ flex: 1, justifyContent:'center' , alignItems:'center'}}>
-    <Text>Sign In : {store.count}</Text>
-    <Button title="Next" onPress={() => { dispatch({type:"increment"}) }} />
+    <Button title="Đăng Nhập" onPress={() => { navigate("Home") }} />
   </View>
   )
 }
