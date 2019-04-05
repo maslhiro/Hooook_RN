@@ -1,5 +1,5 @@
 import React, {Component, useReducer} from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View, StatusBar } from 'react-native';
 import { AppContainer } from './src/configs'
 import { StoreContext,reducer,initialState } from './src/contexts'
 
@@ -9,6 +9,7 @@ export default function App() {
 
     return (
         <StoreContext.Provider value={{store,dispatch}}>
+          <StatusBar backgroundColor="black"/>
           <AppContainer/>
         </StoreContext.Provider>
     );

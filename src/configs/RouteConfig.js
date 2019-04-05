@@ -1,11 +1,12 @@
 import { createAppContainer, createStackNavigator} from 'react-navigation'
-import { HomeScreens, SignInScreens} from '../screens'
+import { HomeScreens, SignInScreens, SplashScreen} from '../screens'
 
 const rootStack = createStackNavigator({
     Home : HomeScreens,
-    SignIn : SignInScreens
+    SignIn : SignInScreens,
+    Splash : SplashScreen
 },{
-    initialRouteName: 'SignIn',
+    initialRouteName: 'Splash',
     headerMode:'none',
 })
 
