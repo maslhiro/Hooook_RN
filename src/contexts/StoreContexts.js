@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const initialState = { token : ""};
+export const initialState = { token : "", data : []};
 
 export const reducer = (action, state) => {
   switch (action.type) {
@@ -8,6 +8,8 @@ export const reducer = (action, state) => {
       return initialState;
     case "setToken":
       return { ...state, token: action.token };
+    case "setData":
+      return { ...state, data: action.data };
     // case "decrement":
     //   return { count: state.count - 1 };
     default:

@@ -43,10 +43,13 @@ export function SignInScreens() {
             else if (responseJSON.StatusCode != 200) return Alert.alert("Thông báo", JresponseJSON.Erorr.toString());
 
             if (responseJSON) {
+                let dataReponse = JSON.parse(responseJSON.Data)
+                let TKELog_GPS_Data = dataReponse.map((item)=>{return ({Doi_Xe_ID : item.Doi_Xe_ID,Ten_Doi_Xe: item.Ten_Doi_Xe})}) 
                 let TKELog_GPS_Token = responseJSON.Token
-                await setItem(TKELog_GPS_Token);
+                // await setItem(TKELog_GPS_Token);
                 dispatch({type:'setToken',token:TKELog_GPS_Token})
-                navigate("Home")
+                dispatch({type:'setData', data : TKELog_GPS_Data})
+                // navigate("Home")
             }
             else Alert.alert("Thông báo", JSON.stringify(response.Erorr));
 
