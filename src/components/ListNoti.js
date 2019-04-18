@@ -23,8 +23,8 @@ export function ListNoti() {
       );
 
       let responseJSON = await response.json();
-      if (responseJSON.StatusCode == 202) return Alert.alert("Thông báo", responseJSON.Erorr.toString());
-      else if (responseJSON.StatusCode != 200) return Alert.alert("Thông báo", responseJSON.Erorr.toString());
+      if (responseJSON.StatusCode == 202) return Alert.alert("Thông báo", responseJSON.Error.toString());
+      else if (responseJSON.StatusCode != 200) return Alert.alert("Thông báo", responseJSON.Error.toString());
 
       let reponseData = JSON.parse(responseJSON.Data)
 

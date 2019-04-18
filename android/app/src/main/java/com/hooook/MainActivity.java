@@ -1,4 +1,4 @@
-package com.tkelogtrackingdata;
+package com.hooook;
 
 import com.facebook.react.ReactActivity;
 

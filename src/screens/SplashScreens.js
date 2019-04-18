@@ -43,7 +43,7 @@ export function SplashScreen() {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Image source={img_logo} style={{ width: 250, height: 250 }} resizeMode='contain' />
+            <Image source={img_logo} style={{ width: 200, height: 200 }} resizeMode='contain' />
         </View>
     )
 }

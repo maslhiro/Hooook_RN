@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useNavigation } from 'react-navigation-hooks'
-import { View, Text, ImageBackground, TextInput } from 'react-native'
+import { View, Text, ImageBackground, TextInput,Alert } from 'react-native'
 import { Button } from 'react-native-elements'
 import NetInfo from "@react-native-community/netinfo";
 import AsyncStorage from '@react-native-community/async-storage';
@@ -29,7 +29,7 @@ export function SignInScreens() {
         if (!bool) return Alert.alert("Thông báo", "Vui lòng kết nối internet hoặc cho phép ứng dụng kết nối internet");
 
         try {
-            let url_Dang_Nhap = API_URL_DANG_NHAP.concat(`&Ma_Dang_Nhap=${encodeURIComponent(String(userName))}&Mat_Khau=${(passWord)}`)
+            let url_Dang_Nhap = API_URL_DANG_NHAP.concat(`&Ma_Dang_Nhap=${(userName)}&Mat_Khau=${(passWord)}`)
 
             let response = await fetch(
                 url_Dang_Nhap,
@@ -37,8 +37,8 @@ export function SignInScreens() {
             let responseJSON = await response.json();
             console.log("Reponse Dang Nhap : ", responseJSON)
 
-            if (responseJSON.StatusCode == 202) return Alert.alert("Thông báo", responseJSON.Erorr.toString());
-            else if (responseJSON.StatusCode != 200) return Alert.alert("Thông báo", JresponseJSON.Erorr.toString());
+            if (responseJSON.StatusCode == 202) return Alert.alert("Thông báo", responseJSON.Error.toString());
+            else if (responseJSON.StatusCode != 200) return Alert.alert("Thông báo", JresponseJSON.Error.toString());
 
             if (responseJSON) {
                 let dataReponse = JSON.parse(responseJSON.Data)
@@ -52,7 +52,7 @@ export function SignInScreens() {
                 dispatch({ type: 'setData', data: TKELog_GPS_Data })
                 navigate("Home")
             }
-            else Alert.alert("Thông báo", JSON.stringify(response.Erorr));
+            else Alert.alert("Thông báo", JSON.stringify(response.Error));
 
         } catch (error) {
             console.log("Error Dang Nhap ", error)
@@ -62,9 +62,9 @@ export function SignInScreens() {
     }
 
     return (
-        <ImageBackground style={{ flex: 1, justifyContent: 'flex-end' }} source={img_bg} resizeMode='cover'>
+        <ImageBackground style={{ flex: 1, justifyContent: 'center', }} source={img_bg} resizeMode='cover'>
             <View style={{ flex: 1, backgroundColor: 'transparent' }} />
-            <View style={{ flex: 2, backgroundColor: 'transparent' }}>
+            <View style={{ flex: 4, backgroundColor: 'transparent' }}>
                 <KeyboardAwareScrollView
                     contentContainerStyle={{ justifyContent: 'center', backgroundColor: 'white', margin: 20, borderRadius: 5 }}>
                     <Text />
@@ -91,6 +91,7 @@ export function SignInScreens() {
                     <Text />
                 </KeyboardAwareScrollView>
             </View>
+            <View style={{ flex: 1, backgroundColor: 'transparent' }} />
         </ImageBackground>
     )
 }
