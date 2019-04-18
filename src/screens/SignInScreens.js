@@ -3,20 +3,18 @@ import { useNavigation } from 'react-navigation-hooks'
 import { View, Text, ImageBackground, TextInput } from 'react-native'
 import { Button } from 'react-native-elements'
 import NetInfo from "@react-native-community/netinfo";
-import { useAsyncStorage } from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { StoreContext } from '../contexts'
 import { img_bg } from '../assets'
 import { API_URL_DANG_NHAP } from '../commons'
-import { ListenerNoti } from '../components'
 
 export function SignInScreens() {
     const [userName, setUsername] = useState("")
     const [passWord, setPassword] = useState("")
     const { navigate } = useNavigation()
     const { store, dispatch } = useContext(StoreContext);
-    const { getItem, setItem } = useAsyncStorage('@TKEToken:key');
 
     checkNetInfo = async () => {
         let netInfo = await NetInfo.getConnectionInfo()
@@ -44,12 +42,15 @@ export function SignInScreens() {
 
             if (responseJSON) {
                 let dataReponse = JSON.parse(responseJSON.Data)
-                let TKELog_GPS_Data = dataReponse.map((item)=>{return ({Doi_Xe_ID : item.Doi_Xe_ID,Ten_Doi_Xe: item.Ten_Doi_Xe})}) 
+                let TKELog_GPS_Data = dataReponse.map((item) => { return ({ Doi_Xe_ID: item.Doi_Xe_ID, Ten_Doi_Xe: item.Ten_Doi_Xe }) })
                 let TKELog_GPS_Token = responseJSON.Token
-                // await setItem(TKELog_GPS_Token);
-                dispatch({type:'setToken',token:TKELog_GPS_Token})
-                dispatch({type:'setData', data : TKELog_GPS_Data})
-                // navigate("Home")
+
+                await AsyncStorage.setItem('@TKEToken:key', TKELog_GPS_Token)
+                await AsyncStorage.setItem('@TKEData:key', JSON.stringify(TKELog_GPS_Data))
+       
+                dispatch({ type: 'setToken', token: TKELog_GPS_Token })
+                dispatch({ type: 'setData', data: TKELog_GPS_Data })
+                navigate("Home")
             }
             else Alert.alert("Thông báo", JSON.stringify(response.Erorr));
 
@@ -83,7 +84,7 @@ export function SignInScreens() {
                         buttonStyle={{ backgroundColor: "#204397" }}
                         containerStyle={{ margin: 20 }}
                         title="Đăng Nhập"
-                        onPress={() => {onPress_Dang_Nhap()}}
+                        onPress={() => { onPress_Dang_Nhap() }}
                     />
                     <Text style={{ fontSize: 11, alignSelf: 'center' }}>©2017 TKELog GPS - Giải pháp quản lý thông tin hành trình</Text>
                     <Text style={{ fontSize: 11, alignSelf: 'center' }}>Thiết kế và phát triển bởi TKSolution - Version 1.0.0.</Text>

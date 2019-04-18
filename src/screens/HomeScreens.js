@@ -2,11 +2,11 @@ import { View, Text, Button, BackHandler, Alert } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
 import { useNavigation } from 'react-navigation-hooks'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ListNoti, ListenerNoti, Header } from '../components'
+import { ListNoti, GetCloudToken, Header , ListenerNoti} from '../components'
 
 export function HomeScreens() {
   const { navigate } = useNavigation()
- 
+
   useEffect(() => {
     backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       return true;
@@ -38,6 +38,7 @@ export function HomeScreens() {
         onPressRightIcon={() => {onPress_Right_Icon()}}
         rightIcon={<Icon name="ios-log-out" size={30} color='white' />} />
       <ListNoti/>
+      <GetCloudToken/>
       <ListenerNoti/>
     </View>
   )

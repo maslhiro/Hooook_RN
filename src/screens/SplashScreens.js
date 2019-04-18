@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { View, Text, TextInput, ImageBackground, Image } from 'react-native'
 import { useNavigation, useNavigationParam } from 'react-navigation-hooks'
-import { useAsyncStorage } from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { StoreContext } from '../contexts'
 import { img_logo } from '../assets'
@@ -10,16 +10,16 @@ export function SplashScreen() {
     const { navigate } = useNavigation()
     const [showLoading, setShowLoading] = useState(false)
     const { store, dispatch } = useContext(StoreContext);
-    const { getItem, setItem } = useAsyncStorage('@TKEToken:key');
 
-    checkToken = async () => {
+    checkStorage = async () => {
         try {
-            let TKELog_Token = await getItem()
+            let TKELog_Token = await AsyncStorage.getItem('@TKEToken:key')
+            let TKELog_Data = await AsyncStorage.getItem('@TKEData:key')
             if (!TKELog_Token) {
                 navigate("SignIn")
             } else {
-                let state = { token: TKELog_Token }
                 dispatch({ type: 'setToken', token: TKELog_Token })
+                dispatch({ type: 'setData', data: JSON.parse(TKELog_Data) })
                 navigate("Home")
 
             }
@@ -32,7 +32,7 @@ export function SplashScreen() {
     useEffect(() => {
         let timer = setTimeout(() => {
             setShowLoading(true);
-            checkToken()
+            checkStorage()
 
         }, 2000)
         // this will clear Timeout when component unmont like in willComponentUnmount
