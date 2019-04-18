@@ -14,11 +14,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React Native!"
 
-@interface HooookTests : XCTestCase
+@interface TKELogTrackingDataTests : XCTestCase
 
 @end
 
-@implementation HooookTests
+@implementation TKELogTrackingDataTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {
