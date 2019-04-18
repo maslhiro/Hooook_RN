@@ -1,20 +1,45 @@
+import { View, Text, Button, BackHandler, Alert } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
-import {useDispatch, useMappedState} from 'redux-react-hook';
 import { useNavigation } from 'react-navigation-hooks'
-import { StoreContext } from '../contexts'
+import Icon from 'react-native-vector-icons/Ionicons'
+import { ListNoti, ListenerNoti, Header } from '../components'
 
-import { View, Text, Button} from 'react-native'
+export function HomeScreens() {
+  const { navigate } = useNavigation()
+ 
+  useEffect(() => {
+    backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    })
 
-export function HomeScreens(){
-    const {navigate} = useNavigation()
-    const { store, dispatch } = useContext(StoreContext);
+    return () => {
+      backHandler.remove();
+    }
+  }, [])
 
-    return (
-    <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
-      <Text>{store.count}</Text>
-      <Button title="Press me" onPress={()=>{navigate("SignIn")}}/>
-      
+  onPress_Right_Icon = () => {
+    Alert.alert(
+      'Thông báo',
+      'Bạn chắc chắn muôn thoát tài khoản này ?',
+      [
+        {text: 'Không', onPress: () => console.log("NO Pressed"), style: 'cancel'},
+        {text: 'Có', onPress: () => {
+            navigate("SignIn")
+        }}
+      ]
+    );
+  }
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', backgroundColor: '#dddddd', }}>
+      <Header
+        title="THÔNG BÁO"
+        showLeftIcon={false}
+        onPressRightIcon={() => {onPress_Right_Icon()}}
+        rightIcon={<Icon name="ios-log-out" size={30} color='white' />} />
+      <ListNoti/>
+      <ListenerNoti/>
     </View>
-    )
-  
+  )
+
 }
