@@ -2,10 +2,13 @@ import moment from "moment";
 import React, { useEffect, useState , useContext} from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Text, FlatList, View, Alert } from 'react-native'
+
 import { StoreContext } from '../contexts'
-import { API_URL_GET_NOTI } from '../commons'
+import {API_URL_GET_NOTI} from '../commons'
 
 export function ListNoti() {
+  if(!API_URL_GET_NOTI) return null
+
   const [message, setMessage] = useState([])
   const [loading, setLoading] = useState(false)
   const { store, dispatch } = useContext(StoreContext);

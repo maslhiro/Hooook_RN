@@ -1,25 +1,27 @@
-import React, { useState, useEffect} from 'react';
-import { View, Text} from 'react-native'
-import OneSignal from 'react-native-onesignal'; 
-const ONESIGNAL_APPID = "119f887f-003f-4ebb-abca-8a3562a0fecd"
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button } from 'react-native'
+import OneSignal from 'react-native-onesignal';
+import { ONE_SIGNAL_APP_ID } from '../commons'
 
-export function ListenerNoti (){
+export function ListenerNoti() {
+  if (!ONE_SIGNAL_APP_ID) return false
+
   removeEvent = () => {
     console.log("Remove Event")
     OneSignal.removeEventListener('received', this.onReceived);
     OneSignal.removeEventListener('opened', this.onOpened);
     OneSignal.removeEventListener('ids', this.onIds);
-    // OneSignal.deleteTag("number");
   }
-  useEffect(()=>{
-    OneSignal.init(ONESIGNAL_APPID);
+  useEffect(() => {
+    OneSignal.init(ONE_SIGNAL_APP_ID);
     OneSignal.sendTag("number", "1");
 
     OneSignal.addEventListener('received', this.onReceived);
     OneSignal.addEventListener('opened', this.onOpened);
     OneSignal.addEventListener('ids', this.onIds);
 
-    return() => { removeEvent() }},[])
+    return () => { removeEvent() }
+  }, [])
 
   onReceived = (notification) => {
     console.log("Notification received: ", notification);
@@ -36,5 +38,5 @@ export function ListenerNoti (){
     console.log('Device info: ', device);
   }
 
-    return null
+  return <Button onPress={() => { OneSignal.deleteTag("number") }} title="Unsubscribe" />
 }
